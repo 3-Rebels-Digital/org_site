@@ -1,0 +1,38 @@
+.letter {
+    line-height: 80px;
+}
+
+.glitch-text {
+    animation: glitch 1.5s linear infinite;
+
+    &.--symbols {
+        animation-name: glitchSymbols;
+    }
+}
+
+@keyframes glitch {
+
+    2%,
+    64% {
+        transform: translate(0, 0) skew(0deg);
+    }
+
+    4%,
+    60% {
+        transform: translate(0, 0) skew(0deg);
+    }
+
+    62% {
+        font-family: "Ft Activica Mix", sans-serif;
+    }
+}
+
+@keyframes glitchSymbols {
+
+    2%,
+    20%,
+    60%,
+    96% {
+        font-family: "Ft Activica Symbols", sans-serif;
+    }
+}
