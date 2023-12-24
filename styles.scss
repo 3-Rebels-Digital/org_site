@@ -1,0 +1,168 @@
+.heading-1 {
+    white-space: pre-line;
+}
+
+.rebel-switcher {
+    position: relative;
+    transform: scaled3d(1, 1, 1);
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: attr(data-text);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 150%;
+        padding-top: .5rem;
+        clip: rect(0, 900px, 0, 0);
+        white-space: nowrap;
+        background-color: white;
+        color: black;
+    }
+
+
+
+    &.glitch {
+
+        &::before,
+        &::after {
+            animation: switcher-glitch-effect 1.5s infinite linear alternate-reverse;
+        }
+
+        &::before {
+            left: 7px;
+            text-shadow: 1px 0 green;
+        }
+
+        &::after {
+            left: 3px;
+            text-shadow: -1px 0 red;
+        }
+    }
+}
+
+.letter {
+    line-height: 80px;
+    position: relative;
+    transform: scale3d(1, 1, 1);
+
+    &::before,
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto auto;
+        overflow: hidden;
+        padding-top: 2rem;
+        // background: $secondaryColor;
+        // color: $primaryColor;
+        clip: rect(0, 36px, 0, 0);
+
+    }
+
+    &::before {
+        left: 7px;
+        text-shadow: 1px 0 green;
+        animation: glitch-effect 3s infinite linear alternate-reverse;
+    }
+
+    &::after {
+        left: 3px;
+        text-shadow: -1px 0 red;
+        animation: glitch-effect 3s infinite linear alternate-reverse;
+    }
+}
+
+.glitch-text,
+.glitch-text--symbols {
+    // color: transparent;
+}
+
+.glitch-text {
+    // animation: glitch-effect 1.5s linear infinite;
+    font-family: "Ft Activica Mix", sans-serif;
+
+    &:before,
+    &:after {
+        color: white;
+        content: attr(data-text);
+        font-family: "Ft Activica Mix", sans-serif;
+    }
+}
+
+.glitch-text--symbols {
+
+    // animation: glitch-effect 1.5s linear infinite;
+    font-family: "Ft Activica Symbols", sans-serif;
+
+    &:before,
+    &:after {
+        color: white;
+        content: attr(data-text);
+        font-family: "Ft Activica Symbols", sans-serif;
+    }
+}
+
+@keyframes glitch {
+
+    2%,
+    64% {
+        transform: translate(0, 0) skew(0deg);
+    }
+
+    4%,
+    60% {
+        transform: translate(0, 0) skew(0deg);
+    }
+
+    62% {
+        font-family: "Ft Activica Mix", sans-serif;
+    }
+}
+
+@keyframes glitchSymbols {
+
+    2%,
+    20%,
+    60%,
+    96% {
+        font-family: "Ft Activica Symbols", sans-serif;
+    }
+}
+
+$steps: 100;
+
+@keyframes glitch-effect {
+    @for $i from 0 through $steps {
+        #{percentage($i * (1 / $steps))} {
+            clip: rect(random(900)+px, 9999px, random(900)+px, 0);
+        }
+    }
+}
+
+$switchSteps: 50;
+
+@keyframes switcher-glitch-effect {
+    // 0% {
+    //     clip: rect(0, 9999px, 0, 0);
+    // }
+
+    // 5% {
+    //     clip: rect(0, 9999px, 0, 0);
+    // }
+
+    @for $i from 0 through $switchSteps {
+        #{percentage($i * (1 / $switchSteps))} {
+            clip: rect(random(48)+px, 9999px, random(100)+px, 0);
+        }
+    }
+
+    90% {
+        clip: rect(0, 9999px, 0, 0);
+    }
+}

@@ -10,6 +10,10 @@
     }
 }
 
+.glitch-text--symbols {
+    animation: glitchSymbols 1.5s linear infinite;
+}
+
 @keyframes glitch {
 
     2%,
