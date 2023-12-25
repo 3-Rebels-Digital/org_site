@@ -1,5 +1,3 @@
-import './styles-entry.scss';
-
 "use strict";
 
 // if the page has been rendered, then execute the function
