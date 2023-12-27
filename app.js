@@ -1,5 +1,67 @@
 "use strict";
 
+// Define the characters to cycle through and the animation speed and increment.
+const letters = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()_+1234567890";
+const speed = 50; // Time in milliseconds between frames.
+const increment = 2; // Number of frames before revealing the next character.
+
+// Function to return a random letter from the defined set.
+const randomLetter = () => {
+  return letters[Math.floor(Math.random() * letters.length)];
+};
+
+// The main function to create the decrypter animation.
+const decrypterAnimation = () => {
+  const decrypter = document.querySelector(".heading-1"); // Target element with class '.heading-1'.
+  const decrypterText = decrypter.innerText; // Original text to animate.
+  const decrypterTextArray = decrypterText.split(""); // Split the text into an array of characters.
+  let frameIndex = 0; // Current frame in the animation cycle.
+  let targetTextIndex = 0; // Index of the next character to reveal in the original text.
+  let randomCharacters = ""; // String to hold the random characters.
+  let finalizedText = ""; // String to hold the revealed text.
+
+  // Function to update the text for each frame.
+  function updateTextForFrame() {
+    for (let i = 0; i < decrypterText.length - targetTextIndex; i++) {
+      // Preserve spaces and line breaks, replace other characters with random letters.
+      if (decrypterTextArray[targetTextIndex + i] === " " || decrypterTextArray[targetTextIndex + i] === `\n`) {
+        randomCharacters += decrypterTextArray[targetTextIndex + i];
+      } else {
+        randomCharacters += randomLetter();
+      }
+    }
+
+    // Increment targetTextIndex at the end of each cycle.
+    if (frameIndex === (increment - 1)) {
+      targetTextIndex++;
+    }
+
+    // Add the next actual character from the original text after a full cycle.
+    if (frameIndex === increment) {
+      finalizedText += decrypterText.charAt(targetTextIndex - 1);
+      frameIndex = 0; // Reset frame index for the next cycle.
+    }
+
+    // Update the element's text content with the combined finalized and random text.
+    decrypter.innerText = finalizedText + randomCharacters;
+    randomCharacters = ""; // Reset randomCharacters for the next frame.
+  }
+
+  // Recursive function to animate text over time.
+  function animateText(i) {
+    setTimeout(function () {
+      if (--i) {
+        animateText(i);
+      }
+      updateTextForFrame();
+      frameIndex++;
+    }, (Math.floor(Math.random() * speed)));
+  }
+
+  // Start the animation.
+  animateText(decrypterText.length * increment + 1);
+};
+
 // if the page has been rendered, then execute the function
 const getElement = (selector) => {
   const element = document.querySelector(selector);
@@ -16,7 +78,7 @@ const splitText = (text) => {
     `<span class="letter" data-text="${letter}">${letter}</span>`).join("");
 }
 
-const fontArray = ["Ft Activica Mix", "Ft Activica Symbols", "Ft Activica"];
+const fontArray = ["Ft Activica Pixel", "Ft Activica Symbols", "Ft Activica"];
 
 const changeFont = (element, font) => {
   const fontWithFontBackup = `${font}, "Sans-Serif"`;
@@ -103,5 +165,6 @@ const heroAnimator = () => {
 }
 
 window.addEventListener("load", () => {
-  heroAnimator();
+  // heroAnimator();
+  decrypterAnimation();
 })
